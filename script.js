@@ -94,18 +94,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // --- 6. KONTROL GERAKAN (Kiri, Kanan, Putar) ---
-    function control(e) {
-        if (e.keyCode === 37) { // Kiri
-            moveLeft();
-        } else if (e.keyCode === 38) { // Atas (Putar)
-            rotate();
-        } else if (e.keyCode === 39) { // Kanan
-            moveRight();
-        } else if (e.keyCode === 40) { // Bawah (Jatuh Cepat)
-            moveDown();
-        }
-    }
+    // Hubungkan Tombol HP ke fungsi menggunakan touchstart (Respons lebih cepat)
+    leftButton.addEventListener('touchstart', moveLeft);
+    rightButton.addEventListener('touchstart', moveRight);
+    rotateButton.addEventListener('touchstart', rotate);
+    downButton.addEventListener('touchstart', moveDown);
     
     document.addEventListener('keydown', control); // Hanya berfungsi di PC, perlu tombol di HP
 
