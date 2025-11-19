@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             draw();
             displayNext(); 
-            addScore(); // Dipanggil di sini!
+            addScore(); 
             gameOver(); 
         }
     }
