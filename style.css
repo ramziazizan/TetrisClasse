@@ -1,4 +1,4 @@
-/* style.css (FINAL - Responsif & Skema Warna Biru) */
+/* style.css (FINAL - Responsif, Ringkas & Skema Warna Biru) */
 
 /* BASE & LAYOUT */
 body {
@@ -42,8 +42,7 @@ h1 {
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(20, 1fr);
     background-color: #111;
-    /* Warna Biru */
-    border: 5px solid #007bff; 
+    border: 5px solid #007bff; /* Warna Biru */
 }
 
 /* GAYA UNTUK SETIAP SEL DALAM GRID */
@@ -98,8 +97,7 @@ h1 {
 #start-button {
     padding: 10px 20px;
     font-size: 18px;
-    /* Warna Biru */
-    background-color: #007bff; 
+    background-color: #007bff; /* Warna Biru */
     color: white;
     border: none;
     cursor: pointer;
@@ -110,8 +108,7 @@ h1 {
 .controls {
     margin-top: 15px;
     padding: 10px 5px;
-    /* Warna Biru */
-    border: 2px solid #007bff; 
+    border: 2px solid #007bff; /* Warna Biru */
     border-radius: 5px;
     text-align: center;
 }
@@ -132,17 +129,15 @@ h1 {
     font-size: 14px;
     font-weight: bold;
     background-color: #444;
-    /* Warna Biru */
-    color: #007bff; 
-    border: 1px solid #007bff; 
+    color: #007bff; /* Warna Biru */
+    border: 1px solid #007bff; /* Warna Biru */
     border-radius: 5px;
     cursor: pointer;
     min-width: 70px;
 }
 
 .controls button:active {
-    /* Warna Biru Tua saat aktif */
-    background-color: #0056b3; 
+    background-color: #0056b3; /* Warna Biru Tua saat aktif */
     color: white;
 }
 
@@ -178,9 +173,10 @@ h1 {
     }
     
     .grid {
-        /* PENTING: Ukuran Grid Utama dikecilkan menjadi 60vw */
+        /* Lebar grid 60vw */
         width: 60vw; 
-        height: 120vw; 
+        /* TINGGI DIPERPENDEK menjadi 80vw agar tidak terlalu panjang */
+        height: 80vw; 
         min-width: 0;
         border-width: 3px;
     }
@@ -202,4 +198,4 @@ h1 {
     .controls button {
         min-width: 100px; 
     }
-}
+    }
