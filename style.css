@@ -34,35 +34,68 @@ body {
 }
 
 /* GAYA UNTUK SETIAP SEL DALAM GRID */
-.grid div {
+.grid div, .next-grid div {
     width: 20px;
     height: 20px;
     box-sizing: border-box;
     border: 1px solid #333; /* Garis pemisah antar sel */
 }
 
-/* WARNA UNTUK BALOK (JavaScript akan menambahkan kelas ini) */
-.block {
+/* --- NEXT BLOCK PREVIEW --- */
+.info-box {
+    margin-bottom: 20px;
+    border-bottom: 2px solid #555;
+    padding-bottom: 15px;
+}
+
+.next-block-area {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.next-grid {
+    width: 80px; /* 4 sel * 20px/sel */
+    height: 80px; /* 4 sel * 20px/sel */
+    margin: 10px auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    border: 2px solid #555;
+}
+
+.next-grid div {
+    width: 100%; /* Agar memenuhi sel 4x4 */
+    height: 100%;
     border: none;
+}
+
+
+/* WARNA UNTUK BALOK */
+.block {
+    border: none !important;
     box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.5);
-    background-color: blue; /* Warna default balok */
 }
 
 /* WARNA BALOK INDIVIDUAL */
-.tetromino-L { background-color: orange; }
-.tetromino-J { background-color: blue; }
-.tetromino-I { background-color: cyan; }
-.tetromino-O { background-color: yellow; }
-.tetromino-S { background-color: green; }
-.tetromino-T { background-color: purple; }
-.tetromino-Z { background-color: red; }
+.tetromino-0 { background-color: orange; } /* L */
+.tetromino-1 { background-color: blue; }    /* J (Sebelumnya Z) */
+.tetromino-2 { background-color: purple; }  /* T */
+.tetromino-3 { background-color: yellow; }  /* O */
+.tetromino-4 { background-color: cyan; }    /* I */
+.tetromino-5 { background-color: green; }   /* S */
+.tetromino-6 { background-color: red; }     /* Z (Sebelumnya S) */
 
-/* SIDE PANEL */
+
+/* SIDE PANEL & CONTROLS */
 .side-panel {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     padding: 10px;
+    min-height: 400px; /* Menyesuaikan tinggi grid utama */
 }
 
 #start-button {
@@ -73,4 +106,37 @@ body {
     border: none;
     cursor: pointer;
     border-radius: 5px;
-  }
+    margin-bottom: 20px;
+}
+
+.controls {
+    margin-top: 20px;
+    padding: 10px;
+    border: 2px solid #00ff00;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.controls .row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.controls button {
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #444;
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    border-radius: 5px;
+    cursor: pointer;
+    min-width: 80px;
+}
+
+.controls button:active {
+    background-color: #00ff00;
+    color: black;
+    }
