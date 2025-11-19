@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tetris Klasik</title>
+    <title>Tetris Klasik Lanjutan</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,19 +15,30 @@
                 </div>
             
             <div class="side-panel">
-                <h2>Score: <span id="score">0</span></h2>
+                
+                <div class="info-box">
+                    <h2>Score: <span id="score">0</span></h2>
+                    
+                    <div class="next-block-area">
+                        <p>Berikutnya:</p>
+                        <div id="next-grid" class="next-grid"></div> 
+                    </div>
+                </div>
+
                 <button id="start-button">Mulai Game</button>
+                
                 <div class="controls">
-    <div class="row">
-        <button id="rotate-button">PUTAR</button>
-    </div>
-    <div class="row">
-        <button id="left-button">KIRI</button>
-        <button id="right-button">KANAN</button>
-    </div>
-    <div class="row">
-        <button id="down-button">BAWAH</button>
-    </div>
+                    <p>Kontrol Mobile:</p>
+                    <div class="row">
+                        <button id="rotate-button">PUTAR</button>
+                    </div>
+                    <div class="row">
+                        <button id="left-button">KIRI</button>
+                        <button id="right-button">KANAN</button>
+                    </div>
+                    <div class="row">
+                        <button id="down-button">BAWAH</button>
+                    </div>
                 </div>
             </div>
         </div>
