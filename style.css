@@ -1,4 +1,4 @@
-/* style.css (FINAL - Responsif, Ringkas & Skema Warna Biru) */
+/* style.css (KOREKSI FINAL - GRID 10x20 RAPI & BIRU) */
 
 /* BASE & LAYOUT */
 body {
@@ -33,7 +33,7 @@ h1 {
     align-items: flex-start;
 }
 
-/* KOTAK GRID UTAMA TETRIS (10x20) */
+/* KOTAK GRID UTAMA TETRIS (10x20) - Pengaturan PC */
 .grid {
     width: 200px; 
     min-width: 200px;
@@ -53,13 +53,13 @@ h1 {
     border: 1px solid #333;
 }
 
-/* SIDE PANEL & INFO BOX */
+/* SIDE PANEL & INFO BOX (Pengaturan PC) */
 .side-panel {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 0;
-    min-height: 400px;
+    min-height: 400px; /* Sesuai tinggi grid PC */
 }
 
 .info-box {
@@ -93,7 +93,7 @@ h1 {
     border: none;
 }
 
-/* --- KONTROL TOMBOL HP --- */
+/* --- KONTROL TOMBOL & START BUTTON --- */
 #start-button {
     padding: 10px 20px;
     font-size: 18px;
@@ -167,23 +167,24 @@ h1 {
     }
     
     .game-area {
+        /* Tata letak vertikal */
         flex-direction: column; 
         align-items: center;
         gap: 10px;
     }
     
     .grid {
-        /* Lebar grid 60vw */
-        width: 60vw; 
-        /* TINGGI DIPERPENDEK menjadi 80vw agar tidak terlalu panjang */
-        height: 80vw; 
+        /* KOREKSI: Lebar dikecilkan ke 45vw */
+        width: 45vw; 
+        /* KOREKSI: Tinggi 2x lebar (90vw) untuk rasio 10x20 yang benar */
+        height: 90vw; 
         min-width: 0;
         border-width: 3px;
     }
     
     .side-panel {
         /* Side panel disesuaikan dengan lebar grid */
-        width: 60vw; 
+        width: 45vw; 
         min-height: auto;
     }
 
@@ -196,6 +197,7 @@ h1 {
     }
     
     .controls button {
+        /* Kontrol tombol tetap besar agar mudah di-tap */
         min-width: 100px; 
     }
     }
