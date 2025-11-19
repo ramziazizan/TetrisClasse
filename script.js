@@ -1,11 +1,12 @@
-// script.js (FINAL - Sudah Lengkap dan Dibersihkan dari Bug)
+// script.js (KODE TETRIS FINAL, LENGKAP DENGAN NEXT BLOCK DAN FUNGSI HAPUS BARIS)
 
 document.addEventListener('DOMContentLoaded', () => {
     const gridContainer = document.getElementById('grid-container');
     const scoreDisplay = document.getElementById('score');
     const startButton = document.getElementById('start-button');
-    
-    // --- PENTING: DEKLARASI ELEMEN TOMBOL HP YANG HILANG ---
+    const nextGridContainer = document.getElementById('next-grid');
+
+    // Deklarasi Elemen Tombol HP
     const leftButton = document.getElementById('left-button');
     const rightButton = document.getElementById('right-button');
     const rotateButton = document.getElementById('rotate-button');
@@ -13,34 +14,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const width = 10;
     const height = 20;
+    const nextWidth = 4;
     let squares = [];
+    let nextSquares = [];
     let score = 0;
-    let timerId = null; // Diinisialisasi null untuk cek status
+    let timerId = null; 
     let dropInterval = 1000;
     let currentPosition = 4;
     let currentRotation = 0;
-    let nextRandom = Math.floor(Math.random() * 7); // Untuk balok berikutnya
-    let currentRandom = nextRandom; // Balok yang sedang dimainkan
+    let nextRandom = Math.floor(Math.random() * 7);
+    let currentRandom = nextRandom; 
     
-    // --- 1. MEMBUAT GRID ---
-    function createGrid() {
-        for (let i = 0; i < width * height; i++) { // 200 sel
+    // --- 1. MEMBUAT GRID UTAMA & NEXT GRID ---
+    function createGrid(container, size, squaresArray) {
+        for (let i = 0; i < size * size; i++) {
             const square = document.createElement('div');
-            gridContainer.appendChild(square);
-            squares.push(square);
+            container.appendChild(square);
+            squaresArray.push(square);
         }
-        // Menambahkan 10 sel 'invisible' sebagai lantai/dasar
-        for (let i = 0; i < width; i++) {
-            const floor = document.createElement('div');
-            floor.classList.add('taken');
-            gridContainer.appendChild(floor);
-            squares.push(floor);
+        if (size === width) {
+            for (let i = 0; i < width; i++) {
+                const floor = document.createElement('div');
+                floor.classList.add('taken');
+                container.appendChild(floor);
+                squaresArray.push(floor);
+            }
+        }
+    }
+
+    function createNextGrid() {
+        for (let i = 0; i < nextWidth * nextWidth; i++) {
+            const square = document.createElement('div');
+            nextGridContainer.appendChild(square);
+            nextSquares.push(square);
         }
     }
     
-    createGrid();
-
-    // --- 2. DEFINISI BENTUK TETRIS (Tetrominoes LENGKAP) ---
+    createGrid(gridContainer, width, squares);
+    createNextGrid();
+    
+    // --- 2. DEFINISI BENTUK TETRIS ---
     const lTetromino = [ [1, width+1, width*2+1, 2], [width, width+1, width+2, width*2+2], [1, width+1, width*2+1, width*2], [width, width*2, width*2+1, width*2+2] ];
     const jTetromino = [ [1, width+1, width*2+1, 0], [width, width+1, width+2, 2], [1, width+1, width*2+1, width*2+2], [width, width*2, width*2+1, width*2+2] ];
     const tTetromino = [ [1, width, width+1, width+2], [1, width+1, width+2, width*2+1], [width, width+1, width+2, width*2+1], [1, width, width+1, width*2+1] ];
@@ -52,6 +65,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const theTetrominoes = [lTetromino, jTetromino, tTetromino, oTetromino, iTetromino, sTetromino, zTetromino];
     const classNames = ['tetromino-0', 'tetromino-1', 'tetromino-2', 'tetromino-3', 'tetromino-4', 'tetromino-5', 'tetromino-6'];
     
+    // Bentuk untuk tampilan preview (posisi di grid 4x4)
+    const displayShapes = [
+        [1, nextWidth + 1, nextWidth * 2 + 1, 2], 
+        [1, nextWidth + 1, nextWidth * 2 + 1, 0], 
+        [1, nextWidth, nextWidth + 1, nextWidth + 2], 
+        [0, 1, nextWidth, nextWidth + 1], 
+        [1, nextWidth + 1, nextWidth * 2 + 1, nextWidth * 3 + 1], 
+        [nextWidth, nextWidth + 1, 1, 2], 
+        [0, nextWidth, nextWidth + 1, nextWidth * 2 + 1] 
+    ];
+
     let current = theTetrominoes[nextRandom][currentRotation];
     
     // --- 3. FUNGSI MENGGAMBAR & MENGHAPUS BALOK ---
@@ -67,15 +91,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 4. FUNGSI JATUH (GAME LOOP) ---
+    // --- 4. NEXT BLOCK PREVIEW ---
+    function displayNext() {
+        nextSquares.forEach(square => {
+            square.classList.remove('block', ...classNames); 
+        });
+        
+        const shape = displayShapes[nextRandom];
+        const className = classNames[nextRandom];
+
+        shape.forEach(index => {
+            nextSquares[index].classList.add('block', className);
+        });
+    }
+
+    // --- 5. FUNGSI JATUH & MEMBEKUKAN BALOK ---
     function moveDown() {
+        if (!timerId) return;
         undraw();
-        currentPosition += width; 
+        currentPosition += width;
         draw();
-        freeze(); 
+        freeze();
     }
     
-    // --- 5. FUNGSI MEMBEKUKAN BALOK & MULAI BARU ---
     function freeze() {
         if (current.some(index => squares[currentPosition + index + width].classList.contains('taken'))) {
             current.forEach(index => squares[currentPosition + index].classList.add('taken', classNames[currentRandom]));
@@ -88,22 +126,15 @@ document.addEventListener('DOMContentLoaded', () => {
             current = theTetrominoes[currentRandom][currentRotation];
 
             draw();
-            // Panggil fungsi lain setelah freeze (addScore, displayNext, gameOver)
-            // (Logika ini ada di kode Final sebelumnya, disederhanakan di sini)
-            
-            // Cek Game Over
-            if (current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
-                 scoreDisplay.innerHTML = 'Game Over';
-                 clearInterval(timerId); // Hentikan Game Loop
-                 timerId = null;
-                 startButton.textContent = 'Mulai Baru';
-            }
+            displayNext(); 
+            addScore(); // Dipanggil di sini!
+            gameOver(); 
         }
     }
-    
-    // --- FUNGSI GERAK KIRI & KANAN (PENTING: Logika yang Hilang) ---
+
+    // --- 6. FUNGSI GERAK KIRI, KANAN, & ROTASI ---
     function moveLeft() {
-        if (!timerId) return; // Jangan gerakkan jika di-pause
+        if (!timerId) return;
         undraw();
         const isAtLeftEdge = current.some(index => (currentPosition + index) % width === 0);
         const isBlocked = current.some(index => squares[currentPosition + index - 1].classList.contains('taken'));
@@ -115,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function moveRight() {
-        if (!timerId) return; // Jangan gerakkan jika di-pause
+        if (!timerId) return;
         undraw();
         const isAtRightEdge = current.some(index => (currentPosition + index) % width === width - 1);
         const isBlocked = current.some(index => squares[currentPosition + index + 1].classList.contains('taken'));
@@ -125,47 +156,117 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         draw();
     }
-
+    
     function rotate() {
-        if (!timerId) return; // Jangan putar jika di-pause
+        if (!timerId) return;
         undraw();
         currentRotation++;
         if(currentRotation === current.length) { 
             currentRotation = 0;
         }
         current = theTetrominoes[currentRandom][currentRotation];
+        
+        // Wall Kick Sederhana
+        const isAtLeftEdge = current.some(index => (currentPosition + index) % width === 0);
+        const isAtRightEdge = current.some(index => (currentPosition + index) % width === width - 1);
+
+        if (isAtLeftEdge && isAtRightEdge) {
+            currentRotation--;
+            if (currentRotation < 0) currentRotation = current.length - 1;
+            current = theTetrominoes[currentRandom][currentRotation];
+        }
+
         draw();
     }
 
-    // --- 6. KONTROL GERAKAN (Keyboard) ---
+    // --- 7. FUNGSI HAPUS BARIS & TAMBAH SCORE (Difficulty Scaling) ---
+    function addScore() {
+        let linesCleared = 0;
+
+        for (let i = 0; i < width * height; i += width) {
+            const row = [];
+            for (let j = 0; j < width; j++) {
+                row.push(i + j);
+            }
+            
+            const isFull = row.every(index => squares[index].classList.contains('taken'));
+
+            if (isFull) {
+                linesCleared++;
+                
+                // Hapus kelas dari baris penuh
+                row.forEach(index => {
+                    squares[index].classList.remove('taken', 'block', ...classNames);
+                });
+                
+                // Pindahkan baris di atasnya ke bawah
+                const squaresRemoved = squares.splice(i, width);
+                squares = squaresRemoved.concat(squares);
+                squares.forEach(cell => gridContainer.appendChild(cell));
+            }
+        }
+        
+        if (linesCleared > 0) {
+            const scoreMultiplier = [0, 100, 300, 500, 800];
+            score += scoreMultiplier[linesCleared];
+            scoreDisplay.innerHTML = score;
+            
+            // TINGKATKAN KESULITAN (Speed Scaling)
+            if (score % 500 === 0 && dropInterval > 200) { 
+                dropInterval -= 50; 
+                clearInterval(timerId);
+                timerId = setInterval(moveDown, dropInterval);
+            }
+        }
+    }
+
+    // --- 8. FUNGSI GAME OVER ---
+    function gameOver() {
+        if (current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
+            scoreDisplay.innerHTML = `GAME OVER! Score Akhir: ${score}`;
+            clearInterval(timerId); 
+            timerId = null;
+            startButton.textContent = 'Mulai Baru';
+            document.removeEventListener('keydown', control);
+        }
+    }
+
+    // --- 9. KONTROL GERAKAN (Keyboard & Tombol HP) ---
     function control(e) {
-        if (!timerId) return; // Jangan izinkan gerakan saat game di-pause
+        if (!timerId) return;
         if (e.keyCode === 37) moveLeft();
         else if (e.keyCode === 38) rotate();
         else if (e.keyCode === 39) moveRight();
         else if (e.keyCode === 40) moveDown();
     }
-    
     document.addEventListener('keydown', control); 
-    
-    // --- 7. HUBUNGKAN TOMBOL HP (PENTING: Diperbaiki) ---
-    // Gunakan touchstart untuk respons yang lebih cepat di HP
+
+    // Hubungkan Tombol HP menggunakan touchstart
     leftButton.addEventListener('touchstart', moveLeft);
     rightButton.addEventListener('touchstart', moveRight);
     rotateButton.addEventListener('touchstart', rotate);
     downButton.addEventListener('touchstart', moveDown);
-    
-    // --- 8. START/PAUSE GAME ---
+
+    // --- 10. START/PAUSE GAME LOGIC ---
     startButton.addEventListener('click', () => {
+        if (scoreDisplay.innerHTML.includes('GAME OVER')) {
+            window.location.reload(); 
+            return;
+        }
+
         if (timerId) {
-            clearInterval(timerId); // Pause
+            clearInterval(timerId); 
             timerId = null;
             startButton.textContent = 'Lanjut';
         } else {
-            // Logika Game Loop Start
+            // Game Loop Start
             timerId = setInterval(moveDown, dropInterval); 
             startButton.textContent = 'Jeda';
-            draw(); 
+            draw();
+            displayNext(); 
         }
     });
+
+    // Tampilkan balok berikutnya saat halaman dimuat
+    displayNext();
 });
