@@ -1,4 +1,4 @@
-/* style.css (Final & Responsive) */
+/* style.css (FINAL - Responsif & Skema Warna Biru) */
 
 /* BASE & LAYOUT */
 body {
@@ -16,8 +16,7 @@ body {
     padding: 10px;
     background: #222;
     border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
-    /* Set lebar maksimum untuk responsivitas */
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.4); 
     max-width: 95vw; 
     width: 450px; 
 }
@@ -28,7 +27,6 @@ h1 {
 }
 
 .game-area {
-    /* Gunakan Flexbox untuk tata letak: default horizontal di PC */
     display: flex;
     gap: 15px;
     justify-content: center;
@@ -37,7 +35,6 @@ h1 {
 
 /* KOTAK GRID UTAMA TETRIS (10x20) */
 .grid {
-    /* PENTING: Gunakan satuan relatif untuk lebar */
     width: 200px; 
     min-width: 200px;
     height: 400px;
@@ -45,12 +42,12 @@ h1 {
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(20, 1fr);
     background-color: #111;
-    border: 5px solid #00ff00;
+    /* Warna Biru */
+    border: 5px solid #007bff; 
 }
 
 /* GAYA UNTUK SETIAP SEL DALAM GRID */
 .grid div, .next-grid div {
-    /* Ukuran sel harus menyesuaikan ukuran grid */
     width: 100%; 
     height: 100%;
     box-sizing: border-box;
@@ -91,11 +88,30 @@ h1 {
     border: 2px solid #555;
 }
 
+.next-grid div {
+    width: 100%; 
+    height: 100%;
+    border: none;
+}
+
 /* --- KONTROL TOMBOL HP --- */
+#start-button {
+    padding: 10px 20px;
+    font-size: 18px;
+    /* Warna Biru */
+    background-color: #007bff; 
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
 .controls {
     margin-top: 15px;
     padding: 10px 5px;
-    border: 2px solid #00ff00;
+    /* Warna Biru */
+    border: 2px solid #007bff; 
     border-radius: 5px;
     text-align: center;
 }
@@ -116,16 +132,18 @@ h1 {
     font-size: 14px;
     font-weight: bold;
     background-color: #444;
-    color: #00ff00;
-    border: 1px solid #00ff00;
+    /* Warna Biru */
+    color: #007bff; 
+    border: 1px solid #007bff; 
     border-radius: 5px;
     cursor: pointer;
     min-width: 70px;
 }
 
 .controls button:active {
-    background-color: #00ff00;
-    color: black;
+    /* Warna Biru Tua saat aktif */
+    background-color: #0056b3; 
+    color: white;
 }
 
 /* --- WARNA BALOK --- */
@@ -135,43 +153,41 @@ h1 {
 }
 
 .tetromino-0 { background-color: orange; } 
-.tetromino-1 { background-color: blue; } 
-.tetromino-2 { background-color: purple; }
+.tetromino-1 { background-color: blue; }   
+.tetromino-2 { background-color: purple; } 
 .tetromino-3 { background-color: yellow; } 
-.tetromino-4 { background-color: cyan; }
-.tetromino-5 { background-color: green; } 
-.tetromino-6 { background-color: red; } 
+.tetromino-4 { background-color: cyan; }   
+.tetromino-5 { background-color: green; }  
+.tetromino-6 { background-color: red; }    
 
 /* ================================================= */
-/* MEDIA QUERY: RESPONSIVITAS KHUSUS LAYAR KECIL (HP) */
+/* MEDIA QUERY: UKURAN KECIL (HP) */
 /* ================================================= */
 @media (max-width: 500px) {
     
     .container {
         padding: 10px;
-        /* Di HP, gunakan hampir seluruh lebar layar */
         width: 98vw; 
         max-width: none;
     }
     
     .game-area {
-        /* PENTING: Ubah tata letak menjadi VERTICAL di HP */
         flex-direction: column; 
         align-items: center;
         gap: 10px;
     }
     
-    /* Atur lebar grid utama relatif terhadap lebar container */
     .grid {
-        /* Misal: grid mengambil 80% dari lebar container (10 sel x 8vw = 80vw) */
-        width: 80vw;
-        height: 160vw; /* Karena 2x lebarnya (200% dari 80vw) */
+        /* PENTING: Ukuran Grid Utama dikecilkan menjadi 60vw */
+        width: 60vw; 
+        height: 120vw; 
         min-width: 0;
         border-width: 3px;
     }
     
     .side-panel {
-        width: 80vw;
+        /* Side panel disesuaikan dengan lebar grid */
+        width: 60vw; 
         min-height: auto;
     }
 
@@ -184,7 +200,6 @@ h1 {
     }
     
     .controls button {
-        /* Tombol menjadi lebih besar agar mudah disentuh */
         min-width: 100px; 
     }
-    }
+}
