@@ -1,4 +1,4 @@
-/* style.css (KOREKSI FINAL - GRID 10x20 RAPI & BIRU) */
+/* style.css (KOREKSI FINAL TOTAL - GRID 10x20 RAPI & BIRU, TANPA SCROLL DI HP) */
 
 /* BASE & LAYOUT */
 body {
@@ -7,7 +7,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 100vh; /* Memastikan body setinggi viewport */
     margin: 0;
     color: white;
 }
@@ -156,40 +156,46 @@ h1 {
 .tetromino-6 { background-color: red; }    
 
 /* ================================================= */
-/* MEDIA QUERY: UKURAN KECIL (HP) */
+/* MEDIA QUERY: UKURAN KECIL (HP) - SOLUSI FINAL */
 /* ================================================= */
 @media (max-width: 500px) {
     
     .container {
-        padding: 10px;
-        width: 98vw; 
+        padding: 5px; 
+        width: 100vw; 
         max-width: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     
     .game-area {
-        /* Tata letak vertikal */
         flex-direction: column; 
         align-items: center;
         gap: 10px;
+        width: 95%; 
     }
     
     .grid {
-        /* KOREKSI: Lebar dikecilkan ke 45vw */
-        width: 45vw; 
-        /* KOREKSI: Tinggi 2x lebar (90vw) untuk rasio 10x20 yang benar */
-        height: 90vw; 
+        /* KUNCI RASIO 1:2 YANG BENAR dan pastikan muat di layar */
+        /* Tinggi grid diatur 55% dari tinggi layar (55vh) */
+        height: 55vh; 
+        /* Lebar dikunci 50% dari tinggi (55vh / 2.0 = 27.5vh) untuk rasio 10:20 */
+        width: 27.5vh; 
         min-width: 0;
         border-width: 3px;
+        box-sizing: content-box; 
     }
     
     .side-panel {
-        /* Side panel disesuaikan dengan lebar grid */
-        width: 45vw; 
+        /* Side panel akan diletakkan di bawah grid */
+        width: 95%; 
         min-height: auto;
     }
 
     .controls {
         padding: 10px;
+        margin-top: -10px; 
     }
 
     .controls .row {
@@ -197,7 +203,6 @@ h1 {
     }
     
     .controls button {
-        /* Kontrol tombol tetap besar agar mudah di-tap */
         min-width: 100px; 
     }
-    }
+                               }
